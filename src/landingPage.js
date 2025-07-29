@@ -1,3 +1,5 @@
+import { homePage } from "./homePage.js"
+
 export function landingPage() {
     // GETS BODY ELEMENT FROM HTML
     const pageContent = document.querySelector('.content');
@@ -24,7 +26,10 @@ export function landingPage() {
     loginButton.classList.add('loginButton');
     loginButton.textContent = 'Start Free Today';
     loginDiv.appendChild(loginButton);
-    //  FIX ME!!! ADD CHANGE PAGE LOGIC HERE
+    loginButton.addEventListener('click', () => {
+        pageContent.textContent = "";
+        homePage();
+    })
 
     // ADDS MAIN PAGE CONTENT
     const main = document.createElement('main');
@@ -54,9 +59,12 @@ export function landingPage() {
     textCardLogin.classList.add('loginButton');
     textCardLogin.textContent = 'Start Free Today';
     textCardDiv.appendChild(textCardLogin);
+    textCardLogin.addEventListener('click', () => {
+        pageContent.textContent = "";
+        homePage();
+    })
 
     // ADDS SECTION IN MAIN FOR IMG 
-
     const imgSection = document.createElement('section');
     imgSection.classList.add('imgSection');
     main.appendChild(imgSection);
