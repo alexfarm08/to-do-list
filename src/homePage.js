@@ -1,6 +1,10 @@
-import { addProject } from "./projects";
+import { addProject, projects } from "./projects";
 
 export function homePage() {
+    // ADDS VARS 
+    let projectTitle;
+    let projectDescription;
+
     const pageContent = document.querySelector('.content');
 
     //ADDS THE NAV BAR HEADER 
@@ -90,28 +94,48 @@ export function homePage() {
     projectDescriptionLable.textContent = 'Project Description';
     projectDialogSection.appendChild(projectDescriptionLable);
 
-    const projectDescriptionInput = document.createElement('input'); 
+    const projectDescriptionInput = document.createElement('textarea'); 
     projectDescriptionInput.classList.add('projectFormContent');
     projectDescriptionInput.id = 'projectDescription';
-    projectDescriptionInput.setAttribute('type', 'text-area');
     projectDescriptionInput.setAttribute('name', 'projectDescription');
     projectDialogSection.appendChild(projectDescriptionInput);
 
-    const projectDialogSubmit = document.createElement('input');
+    const projectDialogSubmit = document.createElement('button');
     projectDialogSubmit.classList.add('projectFormContent');
     projectDialogSubmit.id = 'ProjectSubmit';
-    projectDialogSubmit.setAttribute('type', 'submit');
-    projectDialogSubmit.setAttribute('value', '+ Add Project');
+    projectDialogSubmit.textContent = '+ Add Project';
     projectDialogSection.appendChild(projectDialogSubmit);
     
     // ADD PROJECT BUTTON
+
     const addprojectBtn = document.createElement('button');
-    const closeForm = document.querySelector("dialog #submit"); //ADDS CLOSE DIALOG
     addprojectBtn.classList.add('addprojectBtn');
     addprojectBtn.textContent = '+ Project';
+
+    // EVENT LISTENER TO OPEN PROJECTS FORM
+
     addprojectBtn.addEventListener('click', () => {
         projectDialog.showModal();
         projectDialogSection.focus();
     });
     createDiv.appendChild(addprojectBtn);
+
+    // TAKES PROJECT FORM INPUT AND ADDS TO PROJECTS ARR
+
+    projectDialogSubmit.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        projectTitle = document.getElementById('projectTitle').value;
+        projectDescription = document.getElementById('projectDescription').value;
+
+        if (projectTitle.trim() === "" || projectDescription.trim() === "") {
+            alert('please fill out both project title and description');
+            return;
+        }
+
+        addProject(projectTitle,projectDescription);
+        console.log('projects array after add: ' + projects);
+
+        projectDialog.close();
+    });
 }
