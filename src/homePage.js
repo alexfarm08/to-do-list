@@ -1,9 +1,16 @@
 import { addProject, projects } from "./projects";
+import { addToDo, arrToDo } from "./toDoLogic";
 
 export function homePage() {
     // ADDS VARS 
     let projectTitle;
     let projectDescription;
+    let toDoTitle;
+    let toDoDescription;
+    let toDoYear;
+    let toDomonth;
+    let toDoDay;
+    let toDoPriority;
 
     const pageContent = document.querySelector('.content');
 
@@ -70,7 +77,7 @@ export function homePage() {
     header.appendChild(projectDialog);
 
     const projectDialogSection = document.createElement('section');
-    projectDialogSection.classList.add('projectLableInput');
+    projectDialogSection.classList.add('projectDialogSection');
     projectDialog.appendChild(projectDialogSection);
 
     const projectTitleLable = document.createElement('label');
@@ -138,4 +145,147 @@ export function homePage() {
 
         projectDialog.close();
     });
+
+    // MAKES DIALOG WINDOW FOR TO-DOS
+
+    const toDoDialog = document.createElement('dialog');
+    toDoDialog.classList.add('projectDialog');
+    toDoDialog.id = 'toDoDialog';
+    header.appendChild(toDoDialog);
+
+    const toDoDialogSection = document.createElement('section');
+    toDoDialogSection.classList.add('toDoDialogSection');
+    toDoDialogSection.id = 'toDoDialogSection';
+    toDoDialog.appendChild(toDoDialogSection);
+
+    const toDoTitleLable = document.createElement('label');
+    toDoTitleLable.classList.add('toDoFormContent');
+    toDoTitleLable.id = 'toDoTitleLable';
+    toDoTitleLable.htmlFor = 'toDoTitle';
+    toDoTitleLable.textContent = 'To-Do Title';
+    toDoDialogSection.appendChild(toDoTitleLable);
+
+    const toDoTitleInput = document.createElement('input'); 
+    toDoTitleInput.classList.add('toDoFormContent');
+    toDoTitleInput.id = 'toDoTitle';
+    toDoTitleInput.setAttribute('type', 'text');
+    toDoTitleInput.setAttribute('name', 'toDoTitle');
+    toDoDialogSection.appendChild(toDoTitleInput);
+
+    const toDoDescriptionLable = document.createElement('label');
+    toDoDescriptionLable.classList.add('toDoFormContent');
+    toDoDescriptionLable.id = 'toDoDescriptionLable';
+    toDoDescriptionLable.htmlFor = 'toDoDescription';
+    toDoDescriptionLable.textContent = 'To-Do Description';
+    toDoDialogSection.appendChild(toDoDescriptionLable);
+
+    const toDoDescriptionInput = document.createElement('input'); 
+    toDoDescriptionInput.classList.add('toDoFormContent');
+    toDoDescriptionInput.id = 'toDoDescription';
+    toDoDescriptionInput.setAttribute('type', 'text');
+    toDoDescriptionInput.setAttribute('name', 'toDoDescription');
+    toDoDialogSection.appendChild(toDoDescriptionInput);
+
+    const toDoYearLable = document.createElement('label');
+    toDoYearLable.classList.add('toDoFormContent');
+    toDoYearLable.id = 'toDoYearLable';
+    toDoYearLable.htmlFor = 'toDoYear';
+    toDoYearLable.textContent = 'To-Do Year due: ';
+    toDoDialogSection.appendChild(toDoYearLable);
+
+    const toDoYearInput = document.createElement('input'); 
+    toDoYearInput.classList.add('toDoFormContent');
+    toDoYearInput.id = 'toDoYear';
+    toDoYearInput.setAttribute('type', 'number');
+    toDoYearInput.setAttribute('min', '2000');
+    toDoYearInput.setAttribute('max', '3000');
+    toDoYearInput.setAttribute('name', 'toDoYear');
+    toDoDialogSection.appendChild(toDoYearInput);
+
+    const toDoMonthLable = document.createElement('label');
+    toDoMonthLable.classList.add('toDoFormContent');
+    toDoMonthLable.id = 'toDoMonthLabel';
+    toDoMonthLable.htmlFor = 'toDoMonth';
+    toDoMonthLable.textContent = 'To-Do Month due: ';
+    toDoDialogSection.appendChild(toDoMonthLable);
+
+    const toDoMonthInput = document.createElement('input'); 
+    toDoMonthInput.classList.add('toDoFormContent');
+    toDoMonthInput.id = 'toDoMonth';
+    toDoMonthInput.setAttribute('type', 'number');
+    toDoMonthInput.setAttribute('min', '1');
+    toDoMonthInput.setAttribute('max', '12');
+    toDoMonthInput.setAttribute('name', 'toDoMonth');
+    toDoDialogSection.appendChild(toDoMonthInput);
+
+    const toDoDayLable = document.createElement('label');
+    toDoDayLable.classList.add('toDoFormContent');
+    toDoDayLable.id = 'toDoDayLabel';
+    toDoDayLable.htmlFor = 'toDoDay';
+    toDoDayLable.textContent = 'To-Do Day due: ';
+    toDoDialogSection.appendChild(toDoDayLable);
+
+    const toDoDayInput = document.createElement('input'); 
+    toDoDayInput.classList.add('toDoFormContent');
+    toDoDayInput.id = 'toDoDay';
+    toDoDayInput.setAttribute('type', 'number');
+    toDoDayInput.setAttribute('min', '1');
+    toDoDayInput.setAttribute('max', '31');
+    toDoDayInput.setAttribute('name', 'toDoDay');
+    toDoDialogSection.appendChild(toDoDayInput);
+
+    const toDoPriorityLable = document.createElement('label');
+    toDoPriorityLable.classList.add('toDoFormContent');
+    toDoPriorityLable.id = 'toDoPrioritylabel';
+    toDoPriorityLable.htmlFor = 'toDoPriority';
+    toDoPriorityLable.textContent = 'To-Do Priority due: ';
+    toDoDialogSection.appendChild(toDoPriorityLable);
+
+    const toDoPriorityInput = document.createElement('input'); 
+    toDoPriorityInput.classList.add('toDoFormContent');
+    toDoPriorityInput.id = 'toDoPriority';
+    toDoPriorityInput.setAttribute('type', 'text');
+    toDoPriorityInput.setAttribute('name', 'toDoPriority');
+    toDoDialogSection.appendChild(toDoPriorityInput);
+
+    const toDoDialogSubmit = document.createElement('button');
+    toDoDialogSubmit.classList.add('projectFormContent');
+    toDoDialogSubmit.id = 'toDoSubmit';
+    toDoDialogSubmit.textContent = '+ Add Project';
+    toDoDialogSection.appendChild(toDoDialogSubmit);
+
+    // ADD TODO BUTTON
+    const addToDoBtn = document.createElement('button');
+    addToDoBtn.classList.add('addToDoBtn');
+    addToDoBtn.textContent = '+ To Do';
+
+    // EVENT LISTENER TO OPEN TO DO FORM
+
+    addToDoBtn.addEventListener('click', () => {
+        toDoDialog.showModal();
+        toDoDialogSection.focus();
+    });
+    createDiv.appendChild(addToDoBtn);
+
+     toDoDialogSubmit.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        toDoTitle = document.getElementById('toDoTitle').value;
+        toDoDescription = document.getElementById('toDoDescription').value;
+        toDoYear = document.getElementById('toDoYear').value;
+        toDomonth = document.getElementById('toDoMonth').value;
+        toDoDay = document.getElementById('toDoDay').value;
+        toDoPriority = document.getElementById('toDoPriority').value;
+
+        if (toDoTitle.trim() === "" || toDoDescription.trim() === "" || toDoYear.trim() === "" || toDomonth.trim() === "" || toDoDay.trim() === "" || toDoPriority.trim() === "") {
+            alert('please fill out both project title and description');
+            return;
+        }
+
+        addToDo(toDoTitle, toDoDescription, toDoYear, toDomonth, toDoDay, toDoPriority);
+        console.log('ToDo array after add: ' + arrToDo);
+
+        toDoDialog.close();
+    });
+
 }
