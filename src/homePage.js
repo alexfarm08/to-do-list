@@ -288,4 +288,73 @@ export function homePage() {
         toDoDialog.close();
     });
 
+    // ADDS MAIN PAGE CONTENT 
+
+    const contentMain = document.createElement('main');
+    contentMain.id = 'mainSection';
+    contentMain.classList.add('mainSection');
+    pageContent.appendChild(contentMain);
+
+    // ADDS HEADER SECTION
+
+    const mainHeaderSection = document.createElement('section');
+    mainHeaderSection.id = 'mainHeader';
+    mainHeaderSection.classList.add('mainHeader');
+    contentMain.appendChild(mainHeaderSection);
+
+    // PAST DUE TITLE
+
+    const mainHeader1 = document.createElement('div');
+    mainHeader1.id = 'pastDueDiv';
+    mainHeader1.classList.add('pastDueDiv');
+    mainHeaderSection.appendChild(mainHeader1);
+
+    const pastHeader = document.createElement('h2');
+    pastHeader.id = 'pastDueText';
+    pastHeader.classList.add('pastDueText');
+    pastHeader.textContent = 'Past Due';
+    mainHeader1.appendChild(pastHeader);
+
+    // DUE TODAY TITLE 
+
+    const mainHeader2 = document.createElement('div');
+    mainHeader2.id = 'dueTodayDiv';
+    mainHeader2.classList.add('dueTodayDiv');
+    mainHeaderSection.appendChild(mainHeader2);
+
+    const todayHeader = document.createElement('h2');
+    todayHeader.id = 'dueTodayText';
+    todayHeader.classList.add('dueTodayText');
+    todayHeader.textContent = 'Due Today';
+    mainHeader2.appendChild(todayHeader);
+
+    // UPCOMING TITLE
+
+    const mainHeader3 = document.createElement('div');
+    mainHeader3.id = 'upcomingDiv';
+    mainHeader3.classList.add('upcomingDiv');
+    mainHeaderSection.appendChild(mainHeader3);
+
+    const upComingHeader = document.createElement('h2');
+    upComingHeader.id = 'upcomingText';
+    upComingHeader.classList.add('upcomingText');
+    upComingHeader.textContent = 'Upcoming';
+    mainHeader3.appendChild(upComingHeader);
+
+    // SETS UP SECTIONS FOR TO DOS TO BE DISPLAYED 
+
+    const pastSection = document.createElement('section');
+    pastSection.id = 'pastDueSection';
+    pastSection.classList.add('pastDueSection');
+    contentMain.appendChild(pastSection);
+
+    const todaySection = document.createElement('section');
+    todaySection.id = 'todaySection';
+    todaySection.classList.add('todaySection');
+    contentMain.appendChild(todaySection);
+
+    const upComingSection = document.createElement('section');
+    upComingSection.id = 'upComingSection';
+    upComingSection.classList.add('upComingSection');
+    contentMain.appendChild(upComingSection);
 }
