@@ -1,9 +1,9 @@
+import { homePage } from "./homePage";
 import { addProject, projects } from "./projects";
 import { addToDo, arrToDo, compareToDoDates } from "./toDoLogic";
 import { toDoPage } from "./toDoPage";
-import { projectsPage } from "./projectsPage";
 
-export function homePage() {
+export function projectsPage() {
     // ADDS VARS 
     let projectTitle;
     let projectDescription;
@@ -144,7 +144,7 @@ export function homePage() {
 
         addProject(projectTitle,projectDescription);
         console.log('projects array after add: ' + projects);
-
+        displayProjects();
         projectDialog.close();
     });
 
@@ -286,7 +286,6 @@ export function homePage() {
 
         addToDo(toDoTitle, toDoDescription, toDoYear, toDomonth, toDoDay, toDoPriority);
         console.log('ToDo array after add: ' + arrToDo);
-        displayToDos()
         toDoDialog.close();
     });
 
@@ -306,87 +305,43 @@ export function homePage() {
 
     // PAST DUE TITLE
 
-    const mainHeader1 = document.createElement('div');
-    mainHeader1.id = 'pastDueDiv';
-    mainHeader1.classList.add('pastDueDiv');
-    mainHeaderSection.appendChild(mainHeader1);
+    const mainHeader = document.createElement('div');
+    mainHeader.id = 'toDoPageTitleDiv';
+    mainHeader.classList.add('toDoPageTitleDiv');
+    mainHeaderSection.appendChild(mainHeader);
 
-    const pastHeader = document.createElement('h2');
-    pastHeader.id = 'pastDueText';
-    pastHeader.classList.add('pastDueText');
-    pastHeader.textContent = 'Past Due';
-    mainHeader1.appendChild(pastHeader);
-
-    // DUE TODAY TITLE 
-
-    const mainHeader2 = document.createElement('div');
-    mainHeader2.id = 'dueTodayDiv';
-    mainHeader2.classList.add('dueTodayDiv');
-    mainHeaderSection.appendChild(mainHeader2);
-
-    const todayHeader = document.createElement('h2');
-    todayHeader.id = 'dueTodayText';
-    todayHeader.classList.add('dueTodayText');
-    todayHeader.textContent = 'Due Today';
-    mainHeader2.appendChild(todayHeader);
-
-    // UPCOMING TITLE
-
-    const mainHeader3 = document.createElement('div');
-    mainHeader3.id = 'upcomingDiv';
-    mainHeader3.classList.add('upcomingDiv');
-    mainHeaderSection.appendChild(mainHeader3);
-
-    const upComingHeader = document.createElement('h2');
-    upComingHeader.id = 'upcomingText';
-    upComingHeader.classList.add('upcomingText');
-    upComingHeader.textContent = 'Upcoming';
-    mainHeader3.appendChild(upComingHeader);
+    const projectsHeader = document.createElement('h2');
+    projectsHeader.id = 'projectsPageTitle';
+    projectsHeader.classList.add('projectsPageTitle');
+    projectsHeader.textContent = 'All Projects';
+    mainHeader.appendChild(projectsHeader);
 
     // SETS UP SECTIONS FOR TO DOS TO BE DISPLAYED 
 
-    const pastSection = document.createElement('section');
-    pastSection.id = 'pastDueSection';
-    pastSection.classList.add('pastDueSection');
-    contentMain.appendChild(pastSection);
+    const projectsSection = document.createElement('section');
+    projectsSection.id = 'projectsSection';
+    projectsSection.classList.add('projectsSection');
+    contentMain.appendChild(projectsSection); 
 
-    const todaySection = document.createElement('section');
-    todaySection.id = 'todaySection';
-    todaySection.classList.add('todaySection');
-    contentMain.appendChild(todaySection);
-
-    const upComingSection = document.createElement('section');
-    upComingSection.id = 'upComingSection';
-    upComingSection.classList.add('upComingSection');
-    contentMain.appendChild(upComingSection); 
-
-    function displayToDos() {
-        const pastSection = document.getElementById('pastDueSection');
-        const todaySection = document.getElementById('todaySection');
-        const upComingSection = document.getElementById('upComingSection');
-
+    function displayProjects() {
+        const projectsSection = document.getElementById('projectsSection');
+        
         // CLEAR SECTIONS  
-        pastSection.innerHTML = '';
-        todaySection.innerHTML = '';
-        upComingSection.innerHTML = '';
+        projectsSection.innerHTML = '';
 
-        arrToDo.forEach(toDo => {
-        const toDoDiv = document.createElement('div');
-        toDoDiv.classList.add('toDoCard'); // Optional styling class
-        toDoDiv.innerHTML = `
-            <h3>${toDo.title}</h3>
-            <p>${toDo.description}</p>
-            <p>Due: ${toDo.year}-${toDo.month}-${toDo.day}</p>
-            <p>Priority: ${toDo.priority}</p>
+        projects.forEach(project => {
+            const projectsDiv = document.createElement('div');
+            projectsDiv.classList.add('projectCard');
+            projectsDiv.innerHTML = `
+            <h3>${project.title}</h3>
+            <p>${project.description}</p>
             `;
 
             // ADD DELETE BTN
 
-            const category = compareToDoDates(toDo);
-            if (category === 'past') pastSection.appendChild(toDoDiv);
-            if (category === 'today') todaySection.appendChild(toDoDiv);
-            if (category === 'upcoming') upComingSection.appendChild(toDoDiv);
+            projectsSection.appendChild(projectsDiv);
         });
     }
-    displayToDos();
+    displayProjects();
+
 }
