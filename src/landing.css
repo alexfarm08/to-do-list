@@ -1,0 +1,109 @@
+/* CSS VARS */
+
+:root {
+    --bg-bottom: hsl(0 0% 0%);
+    --bg-mid: hsl(0 0% 5%);
+    --bg-top: hsl(0 0% 10%);
+
+    --text-lt: hsl(0 0% 95%);
+    --text-dk: hsl(0 0% 70%);
+
+    --border: hsl(0 0% 30%);
+    --gradient: linear-gradient(0deg, var(--bg-mid) 95%, var(--bg-top));
+    --gradient-hover: linear-gradient(0deg, var(--bg-mid), var(--bg-top));
+
+    --highlight: hsl(0 0% 60%);
+}
+
+/* STYLES */
+
+body {
+    background-color: var(--bg-bottom);
+    color: var(--text-dk);
+}
+
+header {
+    display: flex;
+    max-width: 1440px;
+    background-color: var(--bg-mid);
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    height: 10vh;
+    border-radius: 12px;
+    border: solid 1px var(--border);
+    border-top: solid 1px var(--highlight);
+    background: var(--gradient-hover);
+}
+
+button {
+  background-color: var(--bg-top);
+  border-radius: 12px;
+  border-style: none;
+  box-sizing: border-box;
+  color: var(--text-lt);
+  cursor: pointer;
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: 500;
+  height: 40px;
+  line-height: 20px;
+  margin: 0;
+  outline: none;
+  padding: 10px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: color 100ms;
+  vertical-align: baseline;
+}
+
+button:hover,
+button:focus {
+  background: var(--gradient-hover);
+}
+
+main {
+    max-width: 1440px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 80vh;
+}
+
+.textCardSection {
+    grid-column: 1 / 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.textCard {
+    background-color: var(--bg-mid);
+    border-radius: 12px;
+    border: solid 1px var(--border);
+    border-top: solid 1px var(--highlight);
+    background: var(--gradient-hover);
+    padding: 1rem;
+}
+
+.imgSection {
+    grid-column: 2 / 3;
+}
+
+footer {
+    height: 10vh;
+    max-width: 1440px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+footer p {
+    background-color: var(--bg-mid);
+    border-radius: 12px;
+    border: solid 1px var(--border);
+    border-top: solid 1px var(--highlight);
+    background: var(--gradient-hover);
+    padding: 1rem;
+}

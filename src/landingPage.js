@@ -1,4 +1,5 @@
 import { homePage } from "./homePage.js"
+import "./landing.css";
 
 export function landingPage() {
     // GETS BODY ELEMENT FROM HTML
