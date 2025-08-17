@@ -326,21 +326,39 @@ export function toDoPage() {
 
     function displayToDos() {
         const toDoSection = document.getElementById('toDoSection');
-        
-        // CLEAR SECTIONS  
-        toDoSection.innerHTML = '';
+
+        // Clear
+        toDoSection.textContent = '';
 
         arrToDo.forEach(toDo => {
-        const toDoDiv = document.createElement('div');
-        toDoDiv.classList.add('toDoCard');
-        toDoDiv.innerHTML = `
+            const toDoDiv = document.createElement('div');
+            toDoDiv.className = 'toDoCard';
+
+            const due = toDo.dueDate;
+            const y = due.getFullYear();
+            const m = String(due.getMonth() + 1).padStart(2, '0'); // +1 because 0–11
+            const d = String(due.getDate()).padStart(2, '0');
+
+            toDoDiv.innerHTML = `
             <h3>${toDo.title}</h3>
             <p>${toDo.description}</p>
-            <p>Due: ${toDo.year}-${toDo.month}-${toDo.day}</p>
+            <p>Due: ${y}-${m}-${d}</p>
             <p>Priority: ${toDo.priority}</p>
             `;
 
-            // ADD DELETE BTN
+            function deleteToDo(id) {
+                const i = arrToDo.findIndex(t => t.id === id);
+                if (i !== -1) {
+                arrToDo.splice(i, 1);
+                displayToDos(); // re-render after deletion
+                }
+            }
+
+            const delBtn = document.createElement('button');
+            delBtn.className = 'deleteBtn';
+            delBtn.textContent = 'Delete';
+            delBtn.addEventListener('click', () => deleteToDo(toDo.id));
+            toDoDiv.appendChild(delBtn);
 
             toDoSection.appendChild(toDoDiv);
         });

@@ -5,6 +5,7 @@ function Project(title, description) {
         throw Error("you must use the 'new' operator to call this constructor")
     }
 
+    this.id = crypto.randomUUID();
     this.title = title;
     this.description = description;
     this.projectToDo = [];

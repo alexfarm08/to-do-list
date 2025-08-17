@@ -337,7 +337,19 @@ export function projectsPage() {
             <p>${project.description}</p>
             `;
 
-            // ADD DELETE BTN
+            function deleteProject(id) {
+                const i = projects.findIndex(p => p.id === id);
+                if (i !== -1) {
+                projects.splice(i, 1);
+                displayProjects(); // re-render after deletion
+                }
+            }
+
+            const delBtn = document.createElement('button');
+            delBtn.className = 'deleteBtn';
+            delBtn.textContent = 'Delete';
+            delBtn.addEventListener('click', () => deleteProject(project.id));
+            projectsDiv.appendChild(delBtn);
 
             projectsSection.appendChild(projectsDiv);
         });

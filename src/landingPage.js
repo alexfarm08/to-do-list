@@ -34,7 +34,7 @@ export function landingPage() {
 
     // ADDS MAIN PAGE CONTENT
     const main = document.createElement('main');
-    main.classList.add('main');
+    main.classList.add('mainToDo');
     pageContent.appendChild(main);
 
     // ADDS SECTION IN MAIN FOR TEXT CARD

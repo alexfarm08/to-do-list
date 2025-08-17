@@ -1,4 +1,4 @@
-import {addDate} from "./dates.js"
+import {addDate} from "./dates.js";
 export const arrToDo = [];
 
 function ToDo(title, description, year, month, day, priority) {
@@ -6,6 +6,7 @@ function ToDo(title, description, year, month, day, priority) {
         throw Error("you must use the 'new' operator to call this constructor")
     }
 
+    this.id = crypto.randomUUID();
     this.title = title;
     this.description = description;
     this.dueDate = addDate(year, month, day);
@@ -13,19 +14,25 @@ function ToDo(title, description, year, month, day, priority) {
 }
 
 export function addToDo(title, description, year, month, day, priority) {
-    title = new ToDo(title, description, year, month, day, priority);
+    const toDO = new ToDo(title, description, year, month, day, priority);
 
-    arrToDo.push(title);
+    arrToDo.push(toDO);
 }
 
+const startOfDay = (d) => {
+  const x = new Date(d);
+  x.setHours(0, 0, 0, 0);
+  return x;
+};
+
 export function compareToDoDates(toDo) {
-    const today = new Date();
-    today.setHours(0,0,0,0);
+    const due = startOfDay(new Date(toDo.dueDate));
+    const today = startOfDay(new Date());
 
-    const dueDate = new Date(toDo.year, toDo.month, toDo.day);
-    dueDate.setHours(0,0,0,0);
+    const dt = due.getTime();
+    const tt = today.getTime();
 
-    if (dueDate < today) return 'past';
-    if (dueDate.getTime() === today.getTime()) return 'today';
+    if (dt < tt) return 'past';
+    if (dt === tt) return 'today';
     return 'upcoming';
 }
