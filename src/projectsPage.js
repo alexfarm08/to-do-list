@@ -1,5 +1,5 @@
 import { homePage } from "./homePage";
-import { addProject, projects } from "./projects";
+import { addProject, projects, projectsStorage } from "./projects";
 import { addToDo, arrToDo, compareToDoDates } from "./toDoLogic";
 import { toDoPage } from "./toDoPage";
 
@@ -323,11 +323,28 @@ export function projectsPage() {
     projectsSection.classList.add('projectsSection');
     contentMain.appendChild(projectsSection); 
 
+    function loadProjects() {
+        const storedUserData = localStorage.getItem('projects');
+
+        if (!storedUserData) return;
+
+        const parsed = JSON.parse(storedUserData).map(t => ({
+            ...t,
+            // ensure id exists
+            id: t.id || crypto.randomUUID(),
+        }));
+        // replace contents WITHOUT reassigning the array reference
+        projects.splice(0, projects.length, ...parsed);
+
+    }
+
     function displayProjects() {
         const projectsSection = document.getElementById('projectsSection');
         
         // CLEAR SECTIONS  
         projectsSection.innerHTML = '';
+
+        loadProjects();
 
         projects.forEach(project => {
             const projectsDiv = document.createElement('div');
@@ -340,8 +357,9 @@ export function projectsPage() {
             function deleteProject(id) {
                 const i = projects.findIndex(p => p.id === id);
                 if (i !== -1) {
-                projects.splice(i, 1);
-                displayProjects(); // re-render after deletion
+                    projects.splice(i, 1);
+                    projectsStorage(projects);
+                    displayProjects(); // re-render after deletion
                 }
             }
 

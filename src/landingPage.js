@@ -70,8 +70,6 @@ export function landingPage() {
     imgSection.classList.add('imgSection');
     main.appendChild(imgSection);
 
-    // FIX ME!!! ADD IMG HERE
-
     // ADDS FOOTER
     const footer = document.createElement('footer');
     footer.classList.add('footer');

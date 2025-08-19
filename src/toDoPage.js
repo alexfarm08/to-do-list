@@ -1,7 +1,8 @@
 import { homePage } from "./homePage";
 import { addProject, projects } from "./projects";
-import { addToDo, arrToDo } from "./toDoLogic";
+import { addToDo, arrToDo, toDoArrStorage } from "./toDoLogic";
 import { projectsPage } from "./projectsPage";
+import { ja } from "date-fns/locale";
 
 export function toDoPage() {
     // ADDS VARS 
@@ -324,11 +325,30 @@ export function toDoPage() {
     toDoSection.classList.add('toDoSection');
     contentMain.appendChild(toDoSection); 
 
+    function loadToDos() {
+        const storedUserData = localStorage.getItem('toDos');
+
+        if (!storedUserData) return;
+
+        const parsed = JSON.parse(storedUserData).map(t => ({
+            ...t,
+            // revive date string -> Date
+            dueDate: new Date(t.dueDate),
+            // ensure id exists
+            id: t.id || crypto.randomUUID(),
+        }));
+        // replace contents WITHOUT reassigning the array reference
+        arrToDo.splice(0, arrToDo.length, ...parsed);
+
+    }
+
     function displayToDos() {
         const toDoSection = document.getElementById('toDoSection');
 
         // Clear
         toDoSection.textContent = '';
+
+        loadToDos();
 
         arrToDo.forEach(toDo => {
             const toDoDiv = document.createElement('div');
@@ -350,6 +370,7 @@ export function toDoPage() {
                 const i = arrToDo.findIndex(t => t.id === id);
                 if (i !== -1) {
                 arrToDo.splice(i, 1);
+                toDoArrStorage(arrToDo);
                 displayToDos(); // re-render after deletion
                 }
             }
@@ -361,6 +382,7 @@ export function toDoPage() {
             toDoDiv.appendChild(delBtn);
 
             toDoSection.appendChild(toDoDiv);
+            
         });
     }
     displayToDos();

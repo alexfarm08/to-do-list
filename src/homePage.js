@@ -1,5 +1,5 @@
 import { addProject, projects } from "./projects";
-import { addToDo, arrToDo, compareToDoDates, deleteToDo } from "./toDoLogic";
+import { addToDo, arrToDo, compareToDoDates, deleteToDo, toDoArrStorage } from "./toDoLogic";
 import { toDoPage } from "./toDoPage";
 import { projectsPage } from "./projectsPage";
 
@@ -360,6 +360,23 @@ export function homePage() {
     upComingSection.classList.add('upComingSection');
     contentMain.appendChild(upComingSection); 
 
+    function loadToDos() {
+        const storedUserData = localStorage.getItem('toDos');
+
+        if (!storedUserData) return;
+
+        const parsed = JSON.parse(storedUserData).map(t => ({
+            ...t,
+            // revive date string -> Date
+            dueDate: new Date(t.dueDate),
+            // ensure id exists
+            id: t.id || crypto.randomUUID(),
+        }));
+        // replace contents WITHOUT reassigning the array reference
+        arrToDo.splice(0, arrToDo.length, ...parsed);
+
+    }
+
     function displayToDos() {
         const pastSection = document.getElementById('pastDueSection');
         const todaySection = document.getElementById('todaySection');
@@ -370,13 +387,15 @@ export function homePage() {
         todaySection.textContent = '';
         upComingSection.textContent = '';
 
+        loadToDos();
+
         arrToDo.forEach(toDo => {
             const toDoDiv = document.createElement('div');
             toDoDiv.className = 'toDoCard';
 
             const due = toDo.dueDate;
             const y = due.getFullYear();
-            const m = String(due.getMonth() + 1).padStart(2, '0'); // +1 because 0–11
+            const m = String(due.getMonth() + 1).padStart(2, '0');
             const d = String(due.getDate()).padStart(2, '0');
 
             toDoDiv.innerHTML = `
@@ -390,6 +409,7 @@ export function homePage() {
               const i = arrToDo.findIndex(t => t.id === id);
               if (i !== -1) {
                 arrToDo.splice(i, 1);
+                toDoArrStorage(arrToDo);
                 displayToDos(); // re-render after deletion
               }
             }

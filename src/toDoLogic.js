@@ -17,6 +17,7 @@ export function addToDo(title, description, year, month, day, priority) {
     const toDO = new ToDo(title, description, year, month, day, priority);
 
     arrToDo.push(toDO);
+    toDoArrStorage(arrToDo);
 }
 
 const startOfDay = (d) => {
@@ -35,4 +36,8 @@ export function compareToDoDates(toDo) {
     if (dt < tt) return 'past';
     if (dt === tt) return 'today';
     return 'upcoming';
+}
+
+export function toDoArrStorage(arrToDo) {
+    localStorage.setItem('toDos', JSON.stringify(arrToDo));
 }

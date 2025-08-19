@@ -15,6 +15,7 @@ export function addProject(title, description) {
     const newProject = new Project(title, description);
 
     projects.push(newProject);
+    projectsStorage(projects)
 }
 
 export function addToProjectToDo(projectTitle, toDoObject) {
@@ -24,4 +25,8 @@ export function addToProjectToDo(projectTitle, toDoObject) {
         return;
     }
     project.projectToDo.push(toDoObject);
+}
+
+export function projectsStorage(projects) {
+    localStorage.setItem('projects', JSON.stringify(projects));
 }
